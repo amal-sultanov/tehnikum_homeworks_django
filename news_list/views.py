@@ -8,7 +8,7 @@ def homepage(request):
     categories = NewsCategory.objects.all()
     context = {'news': news, 'categories': categories}
 
-    return render(request, 'homepage.html', context)
+    return render(request, 'index.html', context)
 
 
 def news_page(request, pk):
