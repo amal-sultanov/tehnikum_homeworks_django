@@ -17,3 +17,11 @@ class News(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Wishlist(models.Model):
+    user_id = models.IntegerField()
+    user_news = models.ForeignKey(News, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user_news.title
