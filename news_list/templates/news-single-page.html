@@ -15,14 +15,30 @@
         </a>
 
         <ul class="nav nav-pills">
-            <li class="nav-item px-2">
+            <li class="nav-item">
                 <a href="/" class="nav-link active"
                    aria-current="page">Home</a>
+            </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item px-2">
+                <a href="/wishlist" class="nav-link bg-secondary text-white"
+                   aria-current="page">Wishlist</a>
+            </li>
+            <li class="nav-item">
+                <a href="/logout" class="nav-link bg-secondary text-white"
+                   aria-current="page">Logout</a>
+            </li>
+            {% else %}
+            <li class="nav-item px-2">
+                <a href="/accounts/login"
+                   class="nav-link bg-secondary text-white"
+                   aria-current="page">Login</a>
             </li>
             <li class="nav-item">
                 <a href="/register" class="nav-link bg-secondary text-white"
                    aria-current="page">Sign-up</a>
             </li>
+            {% endif %}
         </ul>
     </header>
 </div>
@@ -31,6 +47,18 @@
     <p class="mt-5">{{ news.description }}</p>
     <a href="/category/{{ news.category.id }}">
         <h3>{{ news.category.title }}</h3></a>
+    {% if user.is_authenticated %}
+        {% if not is_in_wishlist %}
+            <form action="/add-to-wishlist/{{ news.id }}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-warning">Add to wishlist</button>
+            </form>
+        {% else %}
+            <p>This news is already in your wishlist.</p>
+        {% endif %}
+    {% else %}
+        <p>Register to put news in wishlist.</p>
+    {% endif %}
 </div>
 </body>
 </html>

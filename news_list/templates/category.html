@@ -15,14 +15,30 @@
         </a>
 
         <ul class="nav nav-pills">
-            <li class="nav-item px-2">
+            <li class="nav-item">
                 <a href="/" class="nav-link active"
                    aria-current="page">Home</a>
+            </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item px-2">
+                <a href="/wishlist" class="nav-link bg-secondary text-white"
+                   aria-current="page">Wishlist</a>
+            </li>
+            <li class="nav-item">
+                <a href="/logout" class="nav-link bg-secondary text-white"
+                   aria-current="page">Logout</a>
+            </li>
+            {% else %}
+            <li class="nav-item px-2">
+                <a href="/accounts/login"
+                   class="nav-link bg-secondary text-white"
+                   aria-current="page">Login</a>
             </li>
             <li class="nav-item">
                 <a href="/register" class="nav-link bg-secondary text-white"
                    aria-current="page">Sign-up</a>
             </li>
+            {% endif %}
         </ul>
     </header>
 </div>
@@ -31,11 +47,12 @@
     <hr>
     <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
         {% for news in news %}
-            <div class="feature col">
-                <h2>{{ news.title }}</h2>
-                <p>{{ news.description }}</p>
-                <a href="/news/{{ news.id }}" class="icon-link">more</a>
-            </div>
+        <div class="feature col">
+            <h2>{{ news.title }}</h2>
+            <h4>{{ news.category.title }}</h4>
+            <p>{{ news.description }}</p>
+            <a href="/news/{{ news.id }}" class="icon-link">more</a>
+        </div>
         {% endfor %}
     </div>
 </div>
